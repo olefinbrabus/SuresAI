@@ -1,0 +1,2 @@
+[console_scripts]
+super_resolution = src.super_resolution:super_resolution_cli
