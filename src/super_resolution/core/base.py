@@ -4,7 +4,6 @@ from types import SimpleNamespace
 import torch
 from numpy import ndarray
 from torch import nn, Tensor
-from PIL import Image
 from torchvision.transforms.functional import to_tensor, to_pil_image
 
 from src.super_resolution.core.model import edsr
