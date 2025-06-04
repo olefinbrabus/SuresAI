@@ -5,15 +5,13 @@ from src.super_resolution.base import super_resolution
 
 def main():
     pdm = PathDirectoryManager(directory_name="dataset")
-    # dataset_abspath = pdm.directory_path.absolute()
-    dataset_list = pdm.files_list_by_directory(pdm.directory_path)
+    dataset_list = pdm.files_list_by_directory(pdm.path)
 
-    pdm.directory_name = "low-resolution_photos"
-    # low_photos_abspath = pdm.directory_path.absolute()
-    low_photos_list = pdm.files_list_by_directory(pdm.directory_path)
+    pdm.path = "low-resolution_photos"
+    low_photos_list = pdm.files_list_by_directory(pdm.path)
 
-    pdm.directory_name = "high-resolution_photos"
-    high_photos_abspath = pdm.directory_path.absolute()
+    pdm.path = "high-resolution_photos"
+    high_photos_abspath = pdm.path.absolute()
 
     if dataset_list:
         process_photos_with_sr(dataset_list, high_photos_abspath)

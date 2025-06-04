@@ -12,18 +12,39 @@ and tile-based processing for handling large images efficiently.
 - pillow
 - Pytorch
 - numpy
+
+## Features
+- Support Dataset learning
+- Each photo in low-resolution_photos folder has been improved
 ---
-## Installing the application via Github
+
+## Original image (1,190x1,190 JPEG (24-bit color) 568,37 kB)
+![plot](src/super_resolution/low-resolution_photos/IMG_2089.jpg)
+
+## Improved image (4,760x4,760 JPEG (24-bit color) 2,73 MB)
+![plot](src/super_resolution/high-resolution_photos/IMG_2089.jpg)
+
+## In developing 
+- support png format
+- full quality histogram equalization
+
+---
+
+## Installing the application via GitHub
 ```bash
 git clone  https://github.com/olefinbrabus/PopCornCinema
 cd PopCornCinema
-python -m venv venv
+python3 -m venv venv
 pip install -r requirements.txt
 ```
 ---
 ## Usage
+1. Transfer all the necessary photos to folder low-resolution_photos
+2. Launch application:
+
 ```bash
-python -m src.super_resolution.super_resolution \
-  path/to/input.jpg \
-  path/to/output.jpg
+python main.py
 ```
+
+3. await photos
+4. enjoy your photos :)
