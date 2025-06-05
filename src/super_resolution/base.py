@@ -3,8 +3,8 @@ import numpy as np
 
 from PIL import Image
 
-from src.super_resolution.core.base import load_edsr_model, load_image, apply_super_resolution, save_image
-from src.super_resolution.histogram_equalization import clahe_eq
+from src.super_resolution.core.base import load_edsr_model, load_image, apply_super_resolution
+from src.super_resolution.photo_normalization import clahe_eq, suppress_saturation_hsv, reduce_contrast_hsv
 from src.super_resolution.tiler import split_image_into_tiles, merge_tiles
 
 
@@ -26,6 +26,9 @@ def open_image(path: str) -> Image:
     image_bgr_clahe = clahe_eq(image_bgr)
     image_rgb_clahe = cv2.cvtColor(image_bgr_clahe, cv2.COLOR_BGR2RGB)
 
+    image_rgb_clahe = suppress_saturation_hsv(image_rgb_clahe, factor=1.3)
+    reduce_contrast_hsv(image_rgb_clahe, factor=0.7)
+
     return Image.fromarray(image_rgb_clahe)
 
 def super_resolution(src_filepath: str, dst_filepath: str, scale: int = 4, tile_size: int = 128, overlap: int = 16) -> None:
@@ -39,5 +42,5 @@ def super_resolution(src_filepath: str, dst_filepath: str, scale: int = 4, tile_
         sr_tensor = apply_super_resolution(model, img_tensor)
         processed_tiles.append(((x, y), box, sr_tensor))
 
-    sr_image = merge_tiles(processed_tiles, (width, height), scale, tile_size, overlap)
+    sr_image = merge_tiles(processed_tiles, (width, height), scale, overlap)
     sr_image.save(dst_filepath)

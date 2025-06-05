@@ -3,8 +3,7 @@
 ---
 ## About The app
 SuperResolution is a Python application for enhancing the resolution of images using the 
-**EDSR (Enhanced Deep Super-Resolution)** model. It supports a command-line interface
-and tile-based processing for handling large images efficiently.
+**EDSR (Enhanced Deep Super-Resolution)** based on edsr_baseline_x4-6b446fab model. Application have tile-based processing for handling large images efficiently.
 
 ---
 ## Technologies
@@ -12,6 +11,7 @@ and tile-based processing for handling large images efficiently.
 - pillow
 - Pytorch
 - numpy
+- OpenCV
 
 ## Features
 - Support Dataset learning
@@ -24,9 +24,25 @@ and tile-based processing for handling large images efficiently.
 ## Improved image (4,760x4,760 JPEG (24-bit color) 2,73 MB)
 ![plot](src/super_resolution/high-resolution_photos/IMG_2089.jpg)
 
+## Original image (3,264x2,448 JPEG (24-bit color) 2,1 MB)
+![plot](src/super_resolution/low-resolution_photos/IMG_3283.jpg)
+
+## Improved image (13,056x9,792 JPEG (24-bit color) 9,26 MB)
+![plot](src/super_resolution/high-resolution_photos/IMG_3283.jpg)
+
+## Original image (561x748 JPEG (24-bit color) 73,59 kE)
+![plot](src/super_resolution/low-resolution_photos/IMG_6012.jpg)
+
+## Improved image (2,244x2,992 JPEG (24-bit color) 312,68 kB)
+![plot](src/super_resolution/high-resolution_photos/IMG_6012.jpg)
+
+---
+## Pixel difference
+![plot](src/super_resolution/test_photos/img1.png)
+![plot](src/super_resolution/test_photos/img2.png)
+
 ## In developing 
 - support png format
-- full quality histogram equalization
 
 ---
 

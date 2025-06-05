@@ -18,7 +18,15 @@ def load_edsr_model() -> nn.Module:
     """
     model_path = Path(__file__).parent / 'model' / 'edsr_baseline_x4-6b446fab.pt'
 
-    args = SimpleNamespace(scale=[4], n_resblocks=16, n_feats=64, res_scale=1, rgb_range=255, n_colors=3)
+    args = SimpleNamespace(
+        scale=[4],
+        n_resblocks=16,
+        n_feats=64,
+        res_scale=1,
+        rgb_range=1.0,  # ← ключевое исправление
+        n_colors=3
+    )
+
 
     model = edsr.make_model(args)
     model.load_state_dict(torch.load(model_path, map_location='cpu'))
@@ -37,7 +45,7 @@ def load_image(img_data: ndarray) -> Tensor:
 
     """
     # img = Image.open(path).convert('RGB')
-    img_tensor = to_tensor(img_data).unsqueeze(0)
+    img_tensor = to_tensor(img_data).unsqueeze(0) * 225.0
     return img_tensor
 
 
@@ -53,7 +61,7 @@ def apply_super_resolution(model: nn.Module, img_tensor: Tensor) -> Tensor:
 
     """
     with torch.no_grad():
-        sr_tensor = model(img_tensor).clamp(0.0, 1.0)
+        sr_tensor = model(img_tensor).clamp(0.0, 225.0) / 225
 
     return sr_tensor
 

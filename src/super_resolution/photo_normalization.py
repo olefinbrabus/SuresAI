@@ -23,6 +23,28 @@ def clahe_eq(img_bgr: np.ndarray) -> np.ndarray:
     img_eq = cv2.merge((y_eq, cr, cb))
     return cv2.cvtColor(img_eq, cv2.COLOR_YCrCb2BGR)
 
+def suppress_saturation_hsv(img_rgb: np.ndarray, factor: float = 0.5) -> np.ndarray:
+    img_hsv = cv2.cvtColor(img_rgb, cv2.COLOR_RGB2HSV)
+    h, s, v = cv2.split(img_hsv)
+
+    s = (s.astype(np.float32) * factor).clip(0, 255).astype(np.uint8)
+
+    img_hsv = cv2.merge((h, s, v))
+    return cv2.cvtColor(img_hsv, cv2.COLOR_HSV2RGB)
+
+def reduce_contrast_hsv(img_rgb: np.ndarray, factor: float = 0.8) -> np.ndarray:
+    assert img_rgb.dtype == np.uint8
+    hsv = cv2.cvtColor(img_rgb, cv2.COLOR_RGB2HSV)
+    h, s, v = cv2.split(hsv)
+
+    v = v.astype(np.float32)
+    mean = v.mean()
+    v = (v - mean) * factor + mean
+    v = np.clip(v, 0, 255).astype(np.uint8)
+
+    hsv = cv2.merge((h, s, v))
+    return cv2.cvtColor(hsv, cv2.COLOR_HSV2RGB)
+
 # test another method for avoiding artifacts
 # def adjust_gamma(image: np.ndarray, gamma: float = 1.2) -> np.ndarray:
 #     inv_gamma = 1.0 / gamma
